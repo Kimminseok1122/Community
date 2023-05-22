@@ -4,6 +4,11 @@ spring:
     url: jdbc:mariadb://localhost:3306/hmDatabase?serverTimezone=Asia/Seoul
     username: root
     password: 71040525
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache : false
+    cache-ttl : 3600
 
   jpa:
     database-platform: org.hibernate.dialect.MariaDBDialect
@@ -22,3 +27,4 @@ logging:
           descriptor:
             sql:
               BasicBinder: TRACE
+
