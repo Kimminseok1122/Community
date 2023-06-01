@@ -16,4 +16,8 @@ public class BoardRepository {
             em.persist(tb);
         }
     }
+
+    public Total_Board find(Long id) {
+        return em.find(Total_Board.class, id);
+    }
 }

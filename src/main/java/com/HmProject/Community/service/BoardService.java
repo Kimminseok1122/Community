@@ -13,8 +13,11 @@ public class BoardService {
 
     private final BoardRepository boardRepository;
 
-    @Transactional
     public void savePost(Total_Board tb) {
         boardRepository.save(tb);
+    }
+
+    public Total_Board seePost(Long id) {
+        return boardRepository.find(id);
     }
 }

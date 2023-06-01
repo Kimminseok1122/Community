@@ -2,6 +2,7 @@ package com.HmProject.Community;
 
 import com.HmProject.Community.domain.Diary;
 import com.HmProject.Community.domain.Review;
+import com.HmProject.Community.domain.Total_Board;
 import com.HmProject.Community.repository.BoardRepository;
 import com.HmProject.Community.service.BoardService;
 import org.junit.jupiter.api.Test;
@@ -23,23 +24,40 @@ class JpaTest {
     BoardRepository boardRepository;
 
     @Test
-    @Rollback(value = false)
-    public void 글작성() {
-
+    public void 글찾기() {
         Diary diary = new Diary();
 
-        diary.setDiary_content("ㅋㅋ");
-        diary.setDiary_date("예시야");
-        diary.setDiary_views("몇번 봤겠지");
+        diary.setBoard_title("ㅋㅋ");
+        diary.setDiary_series("김민석 일기장 시리즈");
+        diary.setBoard_date("xx일");
+        diary.setBoard_likes("좋댓구");
+
 
         Review review = new Review();
 
-        review.setReview_content("아오 페리시치");
-        review.setReview_date("손흥민 굿");
-        review.setReview_views("야스 ");
+        review.setBoard_title("ㅎㅎ");
+        review.setReview_point("리뷰포인트");
+        review.setBoard_date("xx월");
+        review.setBoard_likes("좋댓구해라");
 
         boardService.savePost(diary);
         boardService.savePost(review);
+
+        Diary diary1 = (Diary) boardService.seePost(1L);
+        Review review1 = (Review) boardService.seePost(2L);
+
+        System.out.println(diary1.getBoard_title());
+        System.out.println(diary1.getDiary_series());
+        System.out.println(diary1.getBoard_date());
+        System.out.println(diary1.getBoard_likes());
+
+        System.out.println("=====================================");
+
+        System.out.println(review1.getBoard_title());
+        System.out.println(review1.getReview_point());
+        System.out.println(review1.getBoard_date());
+        System.out.println(review1.getBoard_likes());
+
 
     }
 }

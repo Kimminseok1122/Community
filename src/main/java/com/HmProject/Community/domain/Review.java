@@ -11,11 +11,6 @@ import lombok.Setter;
 @Setter
 public class Review extends Total_Board{
 
-    private String review_title;
-    private String review_content;
-    private String review_category;
-    private String review_date;
-    private String review_likes;
-    private String review_views;
+    private String review_point;
 
 }
