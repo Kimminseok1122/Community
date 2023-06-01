@@ -5,6 +5,7 @@ import com.HmProject.Community.domain.Review;
 import com.HmProject.Community.domain.Total_Board;
 import com.HmProject.Community.repository.BoardRepository;
 import com.HmProject.Community.service.BoardService;
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,8 +24,12 @@ class JpaTest {
     @Autowired
     BoardRepository boardRepository;
 
+    @Autowired
+    EntityManager em;
+
     @Test
     public void 글찾기() {
+
         Diary diary = new Diary();
 
         diary.setBoard_title("ㅋㅋ");
@@ -40,8 +45,15 @@ class JpaTest {
         review.setBoard_date("xx월");
         review.setBoard_likes("좋댓구해라");
 
+        System.out.println("===============저장===============");
+
         boardService.savePost(diary);
         boardService.savePost(review);
+
+        em.flush();
+        em.clear();
+
+        System.out.println("===============찾기===============");
 
         Diary diary1 = (Diary) boardService.seePost(1L);
         Review review1 = (Review) boardService.seePost(2L);
