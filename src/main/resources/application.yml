@@ -10,16 +10,6 @@ spring:
     cache : false
     cache-ttl : 3600
 
-  jpa:
-    database-platform: org.hibernate.dialect.MariaDBDialect
-    open-in-view: false
-    properties:
-      hibernate:
-        format_sql: true
-    hibernate:
-      format_sql: true
-      ddl-auto: create
-
 logging:
   level:
     org.hibernate.SQL: DEBUG
