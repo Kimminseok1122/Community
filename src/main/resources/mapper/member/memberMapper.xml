@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.HmProject.Community.mapper.member.MemberMapper">
+
+    <resultMap id="resultMember" type="Member">
+        <result column="ID" property="id"/>
+        <result column="NUMBER" property="number"/>
+        <result column="PASSWORD" property="password"/>
+        <result column="NAME" property="name"/>
+        <result column="GENDER" property="gender"/>
+        <result column="EMAIL" property="email"/>
+        <result column="BIRTH" property="birth"/>
+        <result column="PHONE_NUMBER" property="phoneNumber"/>
+        <result column="SIGN_DATE" property="signDate"/>
+        <result column="NICKNAME" property="nickName"/>
+        <result column="POINT" property="point"/>
+        <result column="LEVEL" property="levelCode"/>
+        <result column="ZIPCODE" property="zipCode"/>
+        <result column="ADDRESS" property="address"/>
+        <result column="ADDRESS_DETAIL" property="addressDetail"/>
+        <result column="ACTIVE_FLAG" property="activeFlag"/>
+    </resultMap>
+
+    <insert id="saveMember" parameterType="Member">
+        INSERT INTO MEMBER(ID,PASSWORD,NAME,GENDER,
+                            EMAIL,BIRTH,PHONE_NUMBER,
+                            SIGN_DATE,NICKNAME,ZIPCODE,ADDRESS,ADDRESS_DETAIL
+                            )
+        VALUES(#{id},#{password},#{name},#{gender},
+                #{email},#{birth},#{phoneNumber},
+                current_timestamp,#{nickName},#{zipCode},#{address},
+                #{addressDetail})
+    </insert>
+
+    <select id="selectMemberById" parameterType="String" resultMap="resultMember">
+        SELECT * FROM MEMBER
+        WHERE ID = #{id}
+    </select>
+
+    <update id="updateMember" parameterType="Member">
+        UPDATE MEMBER SET
+            PASSWORD = #{password},
+            EMAIL = #{email},
+            PHONE_NUMBER = #{phoneNumber},
+            ZIPCODE=#{zipCode},
+            ADDRESS=#{address},
+            ADDRESS_DETAIL=#{addressDetail}
+        WHERE ID=#{id}
+    </update>
+
+    <update id="deleteMember" parameterType="String">
+        UPDATE MEMBER SET
+            ACTIVE_FLAG = 'IS_DELETE'
+        WHERE ID=#{id}
+    </update>
+
+    <select id="checkDuplicateId" parameterType="String" resultType="boolean">
+        SELECT CASE
+                WHEN COUNT(*)>0 THEN 1
+                ELSE 0
+                END
+        FROM MEMBER
+        WHERE ID=#{id}
+    </select>
+
+    <select id="checkDuplicateNickName" parameterType="String" resultType="boolean">
+        SELECT CASE
+            WHEN COUNT(*) > 0 THEN 1
+            ELSE 0
+            END
+        FROM MEMBER
+        WHERE NICKNAME=#{nickName}
+    </select>
+
+</mapper>
