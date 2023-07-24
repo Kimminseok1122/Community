@@ -13,7 +13,7 @@ public class Member {
         private Long number;
         private String password;
         private String name;
-        private String gender;
+        private Gender gender;
         private String email;
         private LocalDate birth;
         private String phoneNumber;
@@ -29,7 +29,7 @@ public class Member {
     public Member() {
     }
 
-    public Member(String id, String password, String name, String gender, String email, LocalDate birth, String phoneNumber, String nickName, String zipCode, String address, String addressDetail) {
+    public Member(String id, String password, String name, Gender gender, String email, LocalDate birth, String phoneNumber, String nickName, String zipCode, String address, String addressDetail) {
         this.id = id;
         this.password = password;
         this.name = name;
@@ -41,5 +41,17 @@ public class Member {
         this.zipCode = zipCode;
         this.address = address;
         this.addressDetail = addressDetail;
+    }
+
+    public void setPhoneNumber(String startNumber,String middleNumber,String endNumber){
+        this.phoneNumber = startNumber + middleNumber + endNumber;
+    }
+
+    public String[] getPhoneNumberParts(){
+        if(this.phoneNumber == null){
+            return new String[] {"","",""};
+        } else {
+            return this.phoneNumber.split("-");
+        }
     }
 }
