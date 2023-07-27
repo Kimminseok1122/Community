@@ -17,7 +17,10 @@ mybatis:
   configuration:
     map-underscore-to-camel-case: true
   type-aliases-package: com.HmProject.Community.domain
-
+jwt:
+  header: Authorization
+  secret: r6LGxQo79ytq5FKHrZoQK4hpMLicpcYzUNkdz3btmEY=
+  token-validity-in-seconds: 1800
 logging:
   level:
     org.hibernate.SQL: DEBUG
