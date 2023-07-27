@@ -49,7 +49,7 @@ public class MemberController {
 
     @GetMapping("/checkDuplicateId")
     @ResponseBody
-    public DuplicateResult checkDuplicateId(@RequestBody String id){
+    public DuplicateResult checkDuplicateId(@RequestParam String id){
         boolean result = memberService.checkDuplicateId(id);
         if(result){
             return new DuplicateResult("duplicate");
@@ -60,8 +60,8 @@ public class MemberController {
 
     @GetMapping("/checkDuplicateNickName")
     @ResponseBody
-    public DuplicateResult checkDuplicateNickName(@RequestBody String nickName){
-        boolean result = memberService.checkDuplicateId(nickName);
+    public DuplicateResult checkDuplicateNickName(@RequestParam String nickName){
+        boolean result = memberService.checkDuplicateNickName(nickName);
         if(result){
             return new DuplicateResult("duplicate");
         } else {

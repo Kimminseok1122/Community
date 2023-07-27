@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>회원가입 화면 샘플 - Bootstrap</title>
+  <title>회원가입</title>
 
   <!-- Bootstrap CSS -->
   <link rel="stylesheet" th:href="@{https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css}"
@@ -53,7 +53,8 @@
             <input type="text" class="form-control mr-3 ip-id-custom"
                    th:field="*{id}"
                    id="id" required>
-            <button type="button" class="btn btn-primary btn-lg btn-block btn-custom">아이디 중복 확인</button>
+            <button type="button" id="idChkBtn" class="btn btn-primary btn-lg btn-block btn-custom">아이디 중복 확인</button>
+              <input type="hidden" value="duplicate" id="input-idHidden">
             </div>
             <div class="invalid-feedback">
               아이디를 입력해주세요
@@ -80,7 +81,8 @@
           <label for="nickName">닉네임</label>
           <div class="d-flex">
             <input type="text" class="form-control mr-3 ip-id-custom" id="nickName" th:field="*{nickName}" required>
-            <button class="btn btn-primary btn-lg btn-block btn-custom">닉네임 중복 확인</button>
+            <button type="button" id="nickNameChkBtn" class="btn btn-primary btn-lg btn-block btn-custom">닉네임 중복 확인</button>
+            <input type="hidden" value="duplicate" id="input-nickNameHidden">
           </div>
           <div class="invalid-feedback">
             닉네임을 입력해주세요
@@ -188,6 +190,53 @@
       });
     }, false);
   </script>
+
+<!-- ID 중복체크 -->
+<script>
+document.getElementById('idChkBtn').addEventListener('click',()=>{
+  let id=document.getElementById('id').value;
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET','/members/checkDuplicateId?id='+id,true);
+  xhr.onload = function(){
+    if(this.status=200){
+      let data = JSON.parse(this.responseText);
+      console.log(data);
+      if(data.result == 'nonDuplicate'){
+        document.getElementById('input-idHidden').value = 'nonDuplicate';
+      } else{
+        document.getElementById('input-idHidden').value = 'duplicate';
+      }
+    } else {
+      document.getElementById('input-idHidden').value = 'duplicate';
+      console.log('request error');
+    }
+  }
+  xhr.send();
+})
+</script>
+
+<!-- 닉네임 중복체크 -->
+<script>
+document.getElementById('nickNameChkBtn').addEventListener('click',()=>{
+  let nickName=document.getElementById('nickName').value;
+  let xhr = new XMLHttpRequest();
+  xhr.open('GET','/members/checkDuplicateNickName?nickName='+nickName,true);
+  xhr.onload = function(){
+    if(this.status=200){
+      let data = JSON.parse(this.responseText);
+      if(data.result == 'nonDuplicate'){
+        document.getElementById('input-nickNameHidden').value = 'nonDuplicate';
+      } else{
+        document.getElementById('input-nickNameHidden').value = 'duplicate';
+      }
+    } else {
+      document.getElementById('input-nickNameHidden').value = 'duplicate';
+      console.log('request error');
+    }
+  }
+  xhr.send();
+})
+</script>
 
 <!-- Daum 주소 api -->
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
